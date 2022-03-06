@@ -1,7 +1,34 @@
+////////// Weather Guesser //////////
+//// Created by Brandon Mikowski ////
+
+/*  Roadmap:
+    Disable button while loading
+    Show city first before asking for guess
+    Change css/html presentation
+    Add graphics
+    Add more cities
+    Add error handling to api request
+    keep score
+    expand api data for more challenges
+    selection area e.g. North america, asia, africa, global, etc...
+    Show live picture of city with current conditions (maybe before guess even)
+    difficulty levels (guess within 10 degrees, 5, or exact)
+*/
+
 import FetchWrapperWeather from "./modules/FetchWrapperWeather.js";
 import {places} from "./modules/places.js"; // 10 current places, will expand to 100
 
+const tester = "Testing 123";
+
 const weatherForm = document.querySelector("#weather-guesser");
+//const newCity = document.querySelector("#new-city");
+
+/* Starting to add city click button for changing current city
+newCity.addEventListener("submit", event => {
+    event.preventDefault();
+
+})
+*/
 
 weatherForm.addEventListener("submit", event => {
     event.preventDefault();
