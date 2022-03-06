@@ -18,25 +18,29 @@
 import FetchWrapperWeather from "./modules/FetchWrapperWeather.js";
 import {places} from "./modules/places.js"; // 10 current places, will expand to 100
 
-const tester = "Testing 123";
-
 const weatherForm = document.querySelector("#weather-guesser");
-//const newCity = document.querySelector("#new-city");
+const newCity = document.querySelector("#new-city");
 
-/* Starting to add city click button for changing current city
+const getLocation = randomNumber => {
+    return places[randomNumber];
+}
+
 newCity.addEventListener("submit", event => {
+    
     event.preventDefault();
 
+    let randomNumber = Math.floor(Math.random()*10);
+    newCity.dataset.number = randomNumber;
+    let [city, country] = getLocation(newCity.dataset.number)
+
+    document.querySelector("h2").textContent = `Current place is ${city.replace('_', ' ')}, ${country}.`;    
 })
-*/
 
 weatherForm.addEventListener("submit", event => {
     event.preventDefault();
 
-    let randomNumber = Math.floor(Math.random()*10);
-    let [city, country] = places[randomNumber];
+    let [city, country] = getLocation(newCity.dataset.number)
 
-    document.querySelector("h2").textContent = `Current place is ${city.replace('_', ' ')}, ${country}.`;
     let answer = document.querySelector("#answer");
 
     // User guesses weather in whole integer, value is stored as "userGuess" 
@@ -60,9 +64,9 @@ weatherForm.addEventListener("submit", event => {
     .then(data => {
         let tempF = Math.floor(data.currentConditions.temp.f);
         userGuess > tempF
-        ? answer.textContent = `Too high! The current weather in ${city} is ${tempF}F.`
+        ? answer.textContent = `Too high! The current weather in ${city.replace('_', ' ')} is ${tempF}F.`
         : userGuess < tempF
-        ? answer.textContent = `Too low! The current weather in ${city} is ${tempF}F.`
+        ? answer.textContent = `Too low! The current weather in ${city.replace('_', ' ')} is ${tempF}F.`
         : answer.textContent = 'YOU WIN! The current weather is: ' + tempF + 'F.'
         })
     .catch(error => console.error(error));

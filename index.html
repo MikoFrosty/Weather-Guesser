@@ -5,19 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Guesser</title>
-    <link rel="stylesheet" src="Resources/css/normalize.css">
-    <link rel="stylesheet" src="Resources/css/main.css">
-    <script type="module" src="Resources/JavaScript/main.js"></script>
+    <link rel="stylesheet" src="resources/css/normalize.css">
+    <link rel="stylesheet" src="resources/css/main.css">
+    <script type="module" src="resources/JavaScript/main.js"></script>
 </head>
 <body>
     <main>
-        <h1 id="none">Weather Guesser!</h1>
+        <h1>Weather Guesser!</h1>
         <br><br>
-        <h2>Unknown city</h2>
+        <h2>No current city selected</h2>
+        <form id="new-city">
+            <input type="submit" id="new-city-submit" value="New City">
+        </form>
         <br><br>
         <form id="weather-guesser">
             <label for="guess">What's your guess?</label>
-            <input type="number" id="guess" name="guess">
+            <input type="number" id="guess" name="guess" placeholder="0">
             <input type="submit" id="submit" value="Submit">
         </form>
         <br><br>
