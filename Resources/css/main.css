@@ -6,6 +6,7 @@
 
 main {
     text-align: center;
+    height: 80vh;
 }
 
 main > h1 {
@@ -17,8 +18,48 @@ main > h2 {
     padding: 20px;
 }
 
+#weather-guesser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#weather-guesser input {
+    margin-left: 20px;
+}
+
+#guess {
+    font-size: 1.5rem;
+    padding: 4px;
+    width: 60px;
+}
+
 input[type="submit"] {
     font-size: 1.5rem;
     padding: 6px;
     cursor: pointer;
 }
+
+#answer {
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+}
+
+.loader {
+    margin: auto;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
