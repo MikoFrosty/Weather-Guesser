@@ -8,7 +8,17 @@ main {
     text-align: center;
 }
 
-main h1 {
-    width: 500px;
-    margin: auto;    
+main > h1 {
+    padding: 70px;
+    font-size: 4em;    
+}
+
+main > h2 {
+    padding: 20px;
+}
+
+input[type="submit"] {
+    font-size: 1.5rem;
+    padding: 6px;
+    cursor: pointer;
 }
