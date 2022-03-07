@@ -19,14 +19,15 @@
         <h2 id="current-city"></h2>
         <form id="weather-guesser">
             <label for="guess">What's your guess?</label>
-            <input type="number" id="guess" name="guess" placeholder="0">
+            <input type="number" id="guess" name="guess" placeholder="0" min="-150" max="150" required>
             <input type="submit" id="submit" value="Submit">
         </form>
         <br><br>
-        <p id="answer">Answer goes here</p>
+        <p id="answer"></p>
+    
+    </main>
     <footer>
         <p>Created by: Brandon Mikowski</p>
     </footer>
-    </main>
 </body>
 </html>
