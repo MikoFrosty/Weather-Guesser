@@ -2,8 +2,8 @@
 //// Created by Brandon Mikowski ////
 
 /*  Roadmap:
-    Disable button while loading
-    Show city first before asking for guess
+    DONE - Disable button while loading
+    DONE - Show city name first before asking for guess
     Change css/html presentation
     Add graphics
     Add more cities
@@ -16,35 +16,40 @@
 */
 
 import FetchWrapperWeather from "./modules/FetchWrapperWeather.js";
-import {places} from "./modules/places.js"; // 10 current places, will expand to 100
+import { places } from "./modules/places.js"; // 10 current places, will expand to 100
 
-const weatherForm = document.querySelector("#weather-guesser");
-const newCity = document.querySelector("#new-city");
+function weatherGuesser() {
+  const weatherForm = document.querySelector("#weather-guesser");
+  const newCity = document.querySelector("#new-city");
+  const submitGuess = document.querySelector("#submit");
 
-const getLocation = randomNumber => {
+  const getLocation = (randomNumber) => {
     return places[randomNumber];
-}
+  };
 
-newCity.addEventListener("submit", event => {
-    
+  newCity.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    let randomNumber = Math.floor(Math.random()*10);
+    let randomNumber = Math.floor(Math.random() * 10);
     newCity.dataset.number = randomNumber;
-    let [city, country] = getLocation(newCity.dataset.number)
+    let [city, country] = getLocation(newCity.dataset.number);
 
-    document.querySelector("h2").textContent = `Current place is ${city.replace('_', ' ')}, ${country}.`;    
-})
+    document.querySelector("#current-city").textContent = `${city.replace(
+      "_",
+      " "
+    )}, ${country}`;
+  });
 
-weatherForm.addEventListener("submit", event => {
+  weatherForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    let [city, country] = getLocation(newCity.dataset.number)
+    submitGuess.setAttribute("disabled", "disabled");
+    let [city, country] = getLocation(newCity.dataset.number);
 
     let answer = document.querySelector("#answer");
 
-    // User guesses weather in whole integer, value is stored as "userGuess" 
-    let userGuess = document.querySelector("#guess").value;  
+    // User guesses weather in whole integer, value is stored as "userGuess"
+    let userGuess = document.querySelector("#guess").value;
 
     let h1 = document.querySelector("h1");
     h1.removeAttribute("id");
@@ -53,21 +58,36 @@ weatherForm.addEventListener("submit", event => {
     console.log(h1.hasAttribute("id"));
     let attribute = h1.getAttribute("id");
     console.log(attribute);
-    
+
     // Weater API is https://weatherdbi.herokuapp.com/documentation/v1
     // Base URL is: https://weatherdbi.herokuapp.com/data/weather/
-    // Use city name for endpoint 
+    // Use city name for endpoint
 
-    const API = new FetchWrapperWeather("https://weatherdbi.herokuapp.com/data/weather/");
+    const API = new FetchWrapperWeather(
+      "https://weatherdbi.herokuapp.com/data/weather/"
+    );
 
     API.get(city)
-    .then(data => {
+      .then((data) => {
         let tempF = Math.floor(data.currentConditions.temp.f);
+        let script = `The current weather in ${city.replace(
+          "_",
+          " "
+        )} is ${tempF}F.`;
         userGuess > tempF
-        ? answer.textContent = `Too high! The current weather in ${city.replace('_', ' ')} is ${tempF}F.`
-        : userGuess < tempF
-        ? answer.textContent = `Too low! The current weather in ${city.replace('_', ' ')} is ${tempF}F.`
-        : answer.textContent = 'YOU WIN! The current weather is: ' + tempF + 'F.'
-        })
-    .catch(error => console.error(error));
-})
+          ? (answer.textContent = `Too high! ${script}`)
+          : userGuess < tempF
+          ? (answer.textContent = `Too low! ${script}`)
+          : (answer.textContent = `YOU WIN! ${script}`);
+      })
+      .catch((error) => {
+        console.error(error);
+        answer.textContent = "The weather is unavailable right now :/";
+      })
+      .finally(() => {
+          submitGuess.removeAttribute("disabled");
+      });
+  });
+}
+
+weatherGuesser();
