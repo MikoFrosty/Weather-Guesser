@@ -15,7 +15,7 @@
     difficulty levels (guess within 10 degrees, 5, or exact)
 */
 
-import FetchWrapperWeather from "./modules/FetchWrapperWeather.js";
+import FetchWrapper from "./modules/fetchwrapper.js";
 import { places } from "./modules/places.js"; // 10 current places, will expand to 100
 
 function weatherGuesser() {
@@ -64,7 +64,7 @@ function weatherGuesser() {
     // Base URL is: https://weatherdbi.herokuapp.com/data/weather/
     // Use city name for endpoint
 
-    const API = new FetchWrapperWeather(
+    const API = new FetchWrapper(
       "https://weatherdbi.herokuapp.com/data/weather/"
     );
 

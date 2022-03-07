@@ -1,6 +1,6 @@
 //import fetch from "node-fetch";  // For Node.js testing
 
-export default class FetchWrapperWeather {
+export default class FetchWrapper {
     constructor(baseURL) {
         this.baseURL = baseURL;
     }
