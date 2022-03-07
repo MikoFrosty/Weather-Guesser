@@ -4,7 +4,7 @@
 /*  Roadmap:
     DONE - Disable button while loading
     DONE - Show city name first before asking for guess
-    Change css/html presentation
+    ACTIVE - Change css/html presentation
     Add graphics
     Add more cities
     Add error handling to api request
@@ -44,9 +44,10 @@ function weatherGuesser() {
     event.preventDefault();
 
     submitGuess.setAttribute("disabled", "disabled");
-    let [city, country] = getLocation(newCity.dataset.number);
-
     let answer = document.querySelector("#answer");
+    answer.textContent = "";
+    answer.classList.add("loader");
+    let [city, country] = getLocation(newCity.dataset.number);
 
     // User guesses weather in whole integer, value is stored as "userGuess"
     let userGuess = document.querySelector("#guess").value;
@@ -74,6 +75,7 @@ function weatherGuesser() {
           "_",
           " "
         )} is ${tempF}F.`;
+        answer.classList.remove("loader");
         userGuess > tempF
           ? (answer.textContent = `Too high! ${script}`)
           : userGuess < tempF
@@ -82,6 +84,7 @@ function weatherGuesser() {
       })
       .catch((error) => {
         console.error(error);
+        answer.classList.remove("loader");
         answer.textContent = "The weather is unavailable right now :/";
       })
       .finally(() => {
