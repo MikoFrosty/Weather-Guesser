@@ -5,14 +5,15 @@
     DONE - Disable button while loading
     DONE - Show city name first before asking for guess
     ACTIVE - Change css/html presentation
-    Add graphics
-    Add more cities
+    ACTIVE - Add graphics
+    Add more cities -- possibly look into adding cities using an api or some other method
     Add error handling to api request
     keep score
     expand api data for more challenges
     selection area e.g. North america, asia, africa, global, etc...
     Show live picture of city with current conditions (maybe before guess even)
     difficulty levels (guess within 10 degrees, 5, or exact)
+    make mobile frienly
 */
 
 import FetchWrapper from "./modules/fetchwrapper.js";
