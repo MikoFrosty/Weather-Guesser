@@ -1,8 +1,15 @@
+
+/* Main elements */
+
 * {
     padding: 0;
     margin: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.1em;
+}
+
+body {
+    background-color: black;
 }
 
 main {
@@ -20,8 +27,10 @@ main > h1 {
     margin: 0;
     padding: 70px;
     font-size: 4em;
-    text-shadow: 2px 2px 0px rgba(52, 164, 255, 0.9), -2px -2px 0px rgb(255, 134, 22);    
+    text-shadow: 1px 0px 2px rgba(2, 236, 186, 0.9), -1px -0px 2px rgb(213, 1, 255), 0px 0px 30px white, 0px 0px 30px white;    
 }
+
+/* Main content wrapper */
 
 #main-content {
     border: 1px solid black;
@@ -34,9 +43,22 @@ main > h1 {
     background-image: linear-gradient(200deg, rgba(255, 255, 255, 0.95), rgba(230, 230, 230, 0.8))
 }
 
+/* New city form and text */
+
 #main-content > h2 {
     padding: 20px;
 }
+
+#new-city {
+    display: flex;
+    justify-content: center;
+}
+
+h2#current-city {
+    padding-top: 0;
+}
+
+/* Weather guesser form and text */
 
 #weather-guesser {
     display: flex;
@@ -56,13 +78,17 @@ main > h1 {
 
 input[type="submit"] {
     font-size: 1.5rem;
+    margin: 0;
     padding: 6px;
+    border: 1px solid black;
     cursor: pointer;
 }
 
 #answer {
     padding: 20px;
 }
+
+/* Footer & loader (spinner) */
 
 footer {
     display: flex;
@@ -77,8 +103,8 @@ footer {
 
 .loader {
     margin: auto;
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
     border-radius: 50%;
     width: 10px;
     height: 10px;
@@ -90,26 +116,46 @@ footer {
     100% { transform: rotate(360deg); }
   }
 
+/* Media queries */
+
 @media only screen and (max-width: 1000px) {
     * {
         font-size: 1em;
     }
-    
     p #answer {
         padding: 0;
     }
-
     #main-content {
         padding-bottom: 0;
     }
 }
 
 @media only screen and (max-width: 600px) {
+    main {
+        height: 78vh;
+    }
     input[type="submit"] {
         font-size: 1rem;
     }
-
     main > h1 {
+        font-size: 3rem;
         padding: 30px;
+    }
+    section#main-content {
+        height: auto;
+        width: 80%;
+        padding: 20px;
+    }
+    .loader {
+        width: 5px;
+        height: 5px;
+    }
+    #weather-guesser {
+        padding-bottom: 20px;
+    }
+}
+@media only screen and (max-width: 300px) {
+    * {
+        font-size: .95em;
     }
 }
