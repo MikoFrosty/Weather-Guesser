@@ -7,13 +7,13 @@
     ACTIVE - Change css/html presentation
     ACTIVE - Add graphics
     Add more cities -- possibly look into adding cities using an api or some other method
-    Add error handling to api request
+    DONE - Add error handling to api request
     keep score
     expand api data for more challenges
     selection area e.g. North america, asia, africa, global, etc...
     Show live picture of city with current conditions (maybe before guess even)
     difficulty levels (guess within 10 degrees, 5, or exact)
-    make mobile frienly
+    ACTIVE - make mobile friendly
 */
 
 import FetchWrapper from "./modules/fetchwrapper.js";
@@ -31,6 +31,7 @@ function weatherGuesser() {
   newCity.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    //document.querySelector("#new-city-submit").value = "New city"; Not used for now
     let randomNumber = Math.floor(Math.random() * 10);
     newCity.dataset.number = randomNumber;
     let [city, country] = getLocation(newCity.dataset.number);
