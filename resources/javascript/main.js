@@ -4,17 +4,17 @@
 /*  Roadmap:
     DONE - Disable button while loading
     DONE - Show city name first before asking for guess
-    ACTIVE - Change css/html presentation
+    DONE - Change css/html presentation
     ACTIVE - Add graphics
     DONE - (added 30 (40 total)) Add more cities -- possibly look into adding cities using an api or some other method
     DONE - Add error handling to api request
     keep score
     expand api data for more challenges
     selection area e.g. North america, asia, africa, global, etc...
-    Show live picture of city with current conditions (maybe before guess even)
+    DONE - Decided on showing map - Show live picture of city with current conditions (maybe before guess even)
     difficulty levels (guess within 10 degrees, 5, or exact)
-    ACTIVE - make mobile friendly
-    add Fahrenheit measurement
+    DONE - make mobile friendly
+    DONE - add Fahrenheit measurement
 */
 
 import FetchWrapper from "./modules/fetchwrapper.js";
@@ -22,26 +22,42 @@ import { places } from "./modules/places.js"; // 10 current places, will expand 
 
 function weatherGuesser() {
   const weatherForm = document.querySelector("#weather-guesser");
-  const newCity = document.querySelector("#new-city");
+  const newCityForm = document.querySelector("#new-city-form");
   const submitGuess = document.querySelector("#submit");
+  const guess = document.querySelector("#guess");
 
   const getLocation = (randomNumber) => {
     return places[randomNumber];
   };
 
-  newCity.addEventListener("submit", (event) => {
+  const loadCity = () => {
+    //document.querySelector("#new-city-submit").value = "New city"; Not used for now
+    const mapWrapper = document.querySelector("#map-wrapper");
+    const currentCity = document.querySelector("#current-city");
+    let randomNumber = Math.floor(Math.random() * 40);
+    newCityForm.dataset.number = randomNumber;
+    //newCityForm.dataset.number = 28; // For testing specific cities
+    let [city, country] = getLocation(newCityForm.dataset.number);
+    guess.value = "";
+
+    currentCity.textContent = `${city.replace(/_/g, " ").replace(",%20cuba", "")}, ${country}`;
+
+    mapWrapper.innerHTML = `
+            <iframe
+              id="gmap_canvas"
+              src="https://maps.google.com/maps?q=${city}&t=k&z=3&ie=UTF8&iwloc=&output=embed"
+              frameborder="1"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+            ></iframe>
+            `;
+  };
+
+  newCityForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    //document.querySelector("#new-city-submit").value = "New city"; Not used for now
-    let randomNumber = Math.floor(Math.random() * 40);
-    newCity.dataset.number = randomNumber;
-    //newCity.dataset.number = 13; // For testing specific cities
-    let [city, country] = getLocation(newCity.dataset.number);
-
-    document.querySelector("#current-city").textContent = `${city.replace(
-      /_/g,
-      " "
-    )}, ${country}`;
+    loadCity();
   });
 
   weatherForm.addEventListener("submit", (event) => {
@@ -51,10 +67,10 @@ function weatherGuesser() {
     let answer = document.querySelector("#answer");
     answer.textContent = "";
     answer.classList.add("loader");
-    let [city, country] = getLocation(newCity.dataset.number);
+    let [city, country] = getLocation(newCityForm.dataset.number);
 
     // User guesses weather in whole integer, value is stored as "userGuess"
-    let userGuess = document.querySelector("#guess").value;
+    let userGuess = guess.value;
 
     let h1 = document.querySelector("h1");
     h1.removeAttribute("id");
@@ -78,7 +94,7 @@ function weatherGuesser() {
         let script = `The current weather in ${city.replace(
           /_/g,
           " "
-        )} is ${tempF}F.`;
+        ).replace(",%20cuba", "")} is ${tempF}℉.`;
         answer.classList.remove("loader");
         userGuess > tempF
           ? (answer.textContent = `Too high! ${script}`)
@@ -92,9 +108,10 @@ function weatherGuesser() {
         answer.textContent = "The weather is unavailable right now :/";
       })
       .finally(() => {
-          submitGuess.removeAttribute("disabled");
+        submitGuess.removeAttribute("disabled");
       });
   });
+  loadCity();
 }
 
 weatherGuesser();
