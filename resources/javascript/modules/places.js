@@ -29,7 +29,7 @@ export const places = [
     ['Chicago', 'Illinois (USA)', 2720546, 'North America', 41.85003, -87.65005],
     ['Rome', 'Italy', 2318895, 'Europe', 41.89193, 12.51133], 
     ['Houston', 'Texas (USA)', 2296224, 'North America', 29.76328, -95.36327],
-    ['Havana', 'Cuba', 2163824, 'North America', 23.13302, -82.38304],
+    ['Havana,%20cuba', 'Cuba', 2163824, 'North America', 23.13302, -82.38304],
     ['Paris', 'France', 2138551, 'Europe', 48.85341, 2.3488], 
     ['Minsk', 'Belarus', 1742124, 'Europe', 53.9, 27.56667],
     ['Warsaw', 'Poland', 1702139, 'Europe', 52.22977, 21.01178],
