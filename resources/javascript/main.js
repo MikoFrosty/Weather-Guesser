@@ -6,7 +6,7 @@
     DONE - Show city name first before asking for guess
     ACTIVE - Change css/html presentation
     ACTIVE - Add graphics
-    Add more cities -- possibly look into adding cities using an api or some other method
+    DONE - (added 30 (40 total)) Add more cities -- possibly look into adding cities using an api or some other method
     DONE - Add error handling to api request
     keep score
     expand api data for more challenges
@@ -14,6 +14,7 @@
     Show live picture of city with current conditions (maybe before guess even)
     difficulty levels (guess within 10 degrees, 5, or exact)
     ACTIVE - make mobile friendly
+    add Fahrenheit measurement
 */
 
 import FetchWrapper from "./modules/fetchwrapper.js";
@@ -32,12 +33,13 @@ function weatherGuesser() {
     event.preventDefault();
 
     //document.querySelector("#new-city-submit").value = "New city"; Not used for now
-    let randomNumber = Math.floor(Math.random() * 10);
+    let randomNumber = Math.floor(Math.random() * 40);
     newCity.dataset.number = randomNumber;
+    //newCity.dataset.number = 13; // For testing specific cities
     let [city, country] = getLocation(newCity.dataset.number);
 
     document.querySelector("#current-city").textContent = `${city.replace(
-      "_",
+      /_/g,
       " "
     )}, ${country}`;
   });
@@ -74,7 +76,7 @@ function weatherGuesser() {
       .then((data) => {
         let tempF = Math.floor(data.currentConditions.temp.f);
         let script = `The current weather in ${city.replace(
-          "_",
+          /_/g,
           " "
         )} is ${tempF}F.`;
         answer.classList.remove("loader");
