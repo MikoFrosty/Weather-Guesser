@@ -24,6 +24,8 @@
           <label for="guess">Enter Guess (<span id="temp-setting">℉</span>)</label>
           <input
             type="number"
+            inputmode="numeric"
+            pattern="[0-9]*"
             id="guess"
             name="guess"
             placeholder="0"
@@ -31,7 +33,7 @@
             max="150"
             required
           />
-          <input type="submit" id="submit" class="button" value="Get Answer" />
+          <input type="submit" id="submit" class="button" value="Submit" />
         </form>
         <!-- Answer -->
         <p id="answer"></p>
@@ -46,6 +48,7 @@
               <input type="radio" id="c" name="temp" value="C">
               <label for="c">Celsius</label>
             </form>
+            <code>REGION & DIFFICULTY CURRENTLY DISABLED (Pending update)</code>
             <form id="options-region-form" class="options-form" data-region="global">
               <p><strong>Region:</strong></p>
               <select name="region" id="region">
