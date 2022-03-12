@@ -13,14 +13,15 @@
     <main>
       <h1>Weather Guesser!</h1>
       <section id="main-content">
-        <!-- New city form -->
-        <form id="new-city-form">
-          <input type="submit" id="new-city-submit" value="New City" />
-        </form>
+        <!-- New city & options buttons -->
+        <div id="button-wrapper">
+          <button id="new-city-button" class="button">New City</button>
+          <button id="option-button" class="button">Options</button>
+        </div>
         <h2>How hot is <span id="current-city"></span> right now?</h2>
         <!-- Main Weather Guesser form -->
         <form id="weather-guesser">
-          <label for="guess">Enter guess (℉)</label>
+          <label for="guess">Enter Guess (<span id="temp-setting">℉</span>)</label>
           <input
             type="number"
             id="guess"
@@ -30,12 +31,44 @@
             max="150"
             required
           />
-          <input type="submit" id="submit" value="Get Answer" />
+          <input type="submit" id="submit" class="button" value="Get Answer" />
         </form>
         <!-- Answer -->
         <p id="answer"></p>
-        <div id="map-wrapper">     
-        </div>  
+        <!-- Options -->
+        <div id="map-and-options-wrapper">
+          <div id="options-wrapper" class="hide">
+            <form id="options-temperature-form" class="options-form">
+              <p><strong>Temperature:</strong></p>
+              <input type="radio" id="f" name="temp" value="F" checked>
+              <label for="f">Fahrenheit</label>
+              <br>
+              <input type="radio" id="c" name="temp" value="C">
+              <label for="c">Celsius</label>
+            </form>
+            <form id="options-region-form" class="options-form" data-region="global">
+              <p><strong>Region:</strong></p>
+              <select name="region" id="region">
+                <option value="global">Global</option>
+                <option value="north-america">North America</option>
+                <option value="europe">Europe</option>
+                <option value="asia">Asia</option>
+              </select>              
+            </form>
+            <form id="options-difficulty-form" class="options-form" data-difficulty="easy">
+              <p><strong>Difficulty:</strong></p>
+              <input type="radio" id="easy" name="difficulty" value="Easy" checked>
+              <label for="easy">Easy</label>
+              <br>
+              <input type="radio" id="medium" name="difficulty" value="Medium">
+              <label for="medium">Medium</label>
+              <br>
+              <input type="radio" id="hard" name="difficulty" value="Hard">
+              <label for="hard">Hard</label>
+            </form>
+          </div>
+          <div id="map-wrapper"></div>
+        </div>
       </section>
     </main>
     <footer>
