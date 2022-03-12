@@ -147,6 +147,8 @@ main > h1 {
     border-radius: 2px;
     border: 1px solid grey;
     color: black;
+    background-color: white;
+    padding: 3px;
     outline: none;
 }
 
