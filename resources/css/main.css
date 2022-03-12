@@ -49,11 +49,6 @@ main > h1 {
     padding: 20px;
 }
 
-#new-city {
-    display: flex;
-    justify-content: center;
-}
-
 #current-city {
     color: rgb(201, 0, 0);
 }
@@ -76,7 +71,14 @@ main > h1 {
     width: 60px;
 }
 
-input[type="submit"] {
+#button-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    width: 60%;
+    margin: auto;
+}
+
+.button {
     border-radius: 5px;
     background-color: rgb(0, 0, 199);
     color:rgba(250, 250, 250, 1);
@@ -87,15 +89,63 @@ input[type="submit"] {
     cursor: pointer;
 }
 
+@media (hover: hover) {
+    .button:hover {
+        background-color: rgb(0, 0, 143);
+    }
+} 
+
 #answer {
     padding: 20px;
 }
 
+#map-and-options-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+#options-wrapper {
+    font-size: .7em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(230, 230, 230, 1);
+    border: 2px solid black;
+}
+
+#options-wrapper p {
+    padding: 5px;
+}
+
+.options-form {
+    display: inline-block;
+    text-align: left;
+    padding: 10px 0;
+    width: 44%;
+}
+
+.hide {
+    display: none!important;
+}
+
+#map-wrapper {
+    display: block;
+}
+
 iframe {
+    box-sizing: border-box;
     width: 500px;
     height: 400px;
     animation-duration: 2s;
     animation-name: fadein;
+    border: 2px solid black;
 }
 
 /* Footer & loader (spinner) */
@@ -155,11 +205,17 @@ footer {
         width: 420px;
         height: 400px;
     }
+    #options-wrapper {
+        font-size: 1em;
+    }
 }
 
 @media only screen and (max-width: 600px) {
     main {
         min-height: 78vh;
+    }
+    #button-wrapper {
+        width: 100%;
     }
     input[type="submit"] {
         font-size: 1rem;
