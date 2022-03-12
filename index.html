@@ -48,26 +48,26 @@
               <input type="radio" id="c" name="temp" value="C">
               <label for="c">Celsius</label>
             </form>
-            <code>REGION & DIFFICULTY CURRENTLY DISABLED (Pending update)</code>
-            <form id="options-region-form" class="options-form" data-region="global">
+            <form id="options-region-form" class="options-form">
               <p><strong>Region:</strong></p>
               <select name="region" id="region">
-                <option value="global">Global</option>
-                <option value="north-america">North America</option>
-                <option value="europe">Europe</option>
-                <option value="asia">Asia</option>
+                <option value="0">Global</option>
+                <option value="1">North America</option>
+                <option value="2">Europe</option>
+                <option value="3">Asia</option>
               </select>              
             </form>
-            <form id="options-difficulty-form" class="options-form" data-difficulty="easy">
+            <code>DIFFICULTY DISABLED (Pending update)</code>
+            <form id="options-difficulty-form" class="options-form" data-difficulty="standard">
               <p><strong>Difficulty:</strong></p>
               <input type="radio" id="easy" name="difficulty" value="Easy" checked>
-              <label for="easy">Easy</label>
+              <label for="easy">Within 10°</label>
               <br>
               <input type="radio" id="medium" name="difficulty" value="Medium">
-              <label for="medium">Medium</label>
+              <label for="medium">Within 5°</label>
               <br>
               <input type="radio" id="hard" name="difficulty" value="Hard">
-              <label for="hard">Hard</label>
+              <label for="hard">Exact Match</label>
             </form>
           </div>
           <div id="map-wrapper"></div>
