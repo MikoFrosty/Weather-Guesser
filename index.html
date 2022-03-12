@@ -42,10 +42,10 @@
           <div id="options-wrapper" class="hide">
             <form id="options-temperature-form" class="options-form">
               <p><strong>Temperature:</strong></p>
-              <input type="radio" id="f" name="temp" value="F" checked>
+              <input type="radio" id="f" name="temp" value="1" checked>
               <label for="f">Fahrenheit</label>
               <br>
-              <input type="radio" id="c" name="temp" value="C">
+              <input type="radio" id="c" name="temp" value="0">
               <label for="c">Celsius</label>
             </form>
             <form id="options-region-form" class="options-form">
@@ -58,15 +58,15 @@
               </select>              
             </form>
             <code>DIFFICULTY DISABLED (Pending update)</code>
-            <form id="options-difficulty-form" class="options-form" data-difficulty="standard">
+            <form id="options-difficulty-form" class="options-form">
               <p><strong>Difficulty:</strong></p>
-              <input type="radio" id="easy" name="difficulty" value="Easy" checked>
+              <input type="radio" id="easy" name="difficulty" value="0" checked>
               <label for="easy">Within 10°</label>
               <br>
-              <input type="radio" id="medium" name="difficulty" value="Medium">
+              <input type="radio" id="medium" name="difficulty" value="1">
               <label for="medium">Within 5°</label>
               <br>
-              <input type="radio" id="hard" name="difficulty" value="Hard">
+              <input type="radio" id="hard" name="difficulty" value="2">
               <label for="hard">Exact Match</label>
             </form>
           </div>
