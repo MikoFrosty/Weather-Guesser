@@ -5,12 +5,12 @@
     DONE - Disable button while loading
     DONE - Show city name first before asking for guess
     DONE - Change css/html presentation
-    PENDING - (may be done, unless weather events are added) Add graphics
+    STANDBY - (may be done, unless weather events are added) Add graphics
     DONE - (added 30 (40 total)) Add more cities -- possibly look into adding cities using an api or some other method
     DONE - Add error handling to api request
-    POSTPONED - keep score
-    POSTPONED - expand api data for more challenges
-    ACTIVE - selection area e.g. North america, asia, africa, global, etc...
+    CANCELLED - keep score
+    STANDBY - expand api data for more challenges
+    DONE - selection area e.g. North america, asia, africa, global, etc...
     DONE - Decided on showing map - Show live picture of city with current conditions (maybe before guess even)
     ACTIVE - difficulty levels (guess within 10 degrees, 5, or exact)
     DONE - switch to celsius toggle
@@ -20,6 +20,7 @@
 
 import FetchWrapper from "./modules/fetchwrapper.js";
 import { places } from "./modules/places.js"; // 10 current places, will expand to 100
+//let counter = 26; // For testing
 
 function weatherGuesser() {
   // Main inputs, forms, buttons, and wrappers
@@ -33,16 +34,28 @@ function weatherGuesser() {
   const optionsForm = {
     temp: {
       form: document.querySelector("#options-temperature-form"),
-      setting: true, // true is f, false is c
+      setting: true, // true - f, false - c
       display: "℉",
     },
-    region: document.querySelector("#options-region-form"),
+    region: {
+      form: document.querySelector("#options-region-form"),
+      setting: 0, // 0 - Global, 1 - North America, 2 - Europe, 3 - Asia
+    },
     difficulty: document.querySelector("#options-difficulty-form"),
   };
 
   // Retrieve a random location from places.js
-  const getLocation = (randomNumber) => {
-    return places[randomNumber];
+  const getPlaces = () => {
+    switch (optionsForm.region.setting) {
+      case 0:
+        return places;
+      case 1:
+        return places.filter((city) => city[3] === "North America");
+      case 2:
+        return places.filter((city) => city[3] === "Europe");
+      case 3:
+        return places.filter((city) => city[3] === "Asia");
+    }
   };
 
   // For hiding the options screen when trying to interact with other buttons (besides options)
@@ -56,15 +69,15 @@ function weatherGuesser() {
   const loadCity = () => {
     const mapWrapper = document.querySelector("#map-wrapper");
     const currentCity = document.querySelector("#current-city");
-    let randomNumber = Math.floor(Math.random() * 40);
-    newCityButton.dataset.number = randomNumber;
-    //newCityButton.dataset.number = 28; // For testing specific cities
-    let [city, country] = getLocation(newCityButton.dataset.number);
+    const placesList = getPlaces();
+    newCityButton.dataset.number = Math.floor(Math.random() * placesList.length);
+    //newCityButton.dataset.number = counter++; // For testing specific cities
+    let [city, country] = placesList[newCityButton.dataset.number];
     guess.value = "";
 
     currentCity.textContent = `${city
       .replace(/_/g, " ")
-      .replace(",%20cuba", "")}, ${country}`;
+      .replace(/[,]%20\w+/, "")}, ${country}`;
 
     // Load new map iframe for new city
     mapWrapper.innerHTML = `
@@ -96,8 +109,8 @@ function weatherGuesser() {
     document.querySelector("#temp-setting").textContent =
       optionsForm.temp.display;
   });
-  optionsForm.region.addEventListener("change", (event) => {
-    optionsForm.region.dataset.region = event.target.value.toLowerCase();
+  optionsForm.region.form.addEventListener("change", (event) => {
+    optionsForm.region.setting = Number.parseInt(event.target.value, 10);
   });
   optionsForm.difficulty.addEventListener("change", (event) => {
     optionsForm.difficulty.dataset.difficulty =
@@ -113,7 +126,7 @@ function weatherGuesser() {
     let answer = document.querySelector("#answer");
     answer.textContent = "";
     answer.classList.add("loader");
-    let [city, country] = getLocation(newCityButton.dataset.number);
+    let [city, country] = getPlaces()[newCityButton.dataset.number];
 
     // User guesses weather in whole integer, value is stored as "userGuess"
     let userGuess = guess.value;
@@ -140,17 +153,19 @@ function weatherGuesser() {
         let tempC = Math.floor(data.currentConditions.temp.c);
         let script = `The current temp in ${city
           .replace(/_/g, " ")
-          .replace(",%20cuba", "")} is ${optionsForm.temp.setting ? tempF : tempC}${optionsForm.temp.display}.`;
+          .replace(/[,]%20\w+/, "")}, ${country} is ${
+          optionsForm.temp.setting ? tempF : tempC
+        }${optionsForm.temp.display}.`;
         answer.classList.remove("loader");
-        
-        const runLogic = temp => {
+
+        const runLogic = (temp) => {
           userGuess > temp
-          ? (answer.textContent = `Too high! ${script}`)
-          : userGuess < temp
-          ? (answer.textContent = `Too low! ${script}`)
-          : (answer.textContent = `YOU WIN! ${script}`);
-        }
-        
+            ? (answer.textContent = `Too high! ${script}`)
+            : userGuess < temp
+            ? (answer.textContent = `Too low! ${script}`)
+            : (answer.textContent = `YOU WIN! ${script}`);
+        };
+
         if (optionsForm.temp.setting) {
           runLogic(tempF);
         } else {
