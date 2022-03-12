@@ -35,6 +35,7 @@
           />
           <input type="submit" id="submit" class="button" value="Submit" />
         </form>
+        <p><sub>You win if your guess is <span id="win-condition">within 10°</span><sub></p>
         <!-- Answer -->
         <p id="answer"></p>
         <!-- Options -->
@@ -57,7 +58,6 @@
                 <option value="3">Asia</option>
               </select>              
             </form>
-            <code>DIFFICULTY DISABLED (Pending update)</code>
             <form id="options-difficulty-form" class="options-form">
               <p><strong>Difficulty:</strong></p>
               <input type="radio" id="easy" name="difficulty" value="0" checked>
