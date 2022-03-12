@@ -40,12 +40,6 @@ function weatherGuesser() {
     difficulty: document.querySelector("#options-difficulty-form"),
   };
 
-  // Convert Fahrenheit to Celsius
-  const fToC = (temp) => {
-    temp = Number.parseInt(temp, 10);
-    return ((temp - 32) * 5) / 9;
-  };
-
   // Retrieve a random location from places.js
   const getLocation = (randomNumber) => {
     return places[randomNumber];
