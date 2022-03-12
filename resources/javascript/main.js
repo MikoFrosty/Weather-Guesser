@@ -12,7 +12,7 @@
     STANDBY - expand api data for more challenges
     DONE - selection area e.g. North america, asia, africa, global, etc...
     DONE - Decided on showing map - Show live picture of city with current conditions (maybe before guess even)
-    ACTIVE - difficulty levels (guess within 10 degrees, 5, or exact)
+    DONE - difficulty levels (guess within 10 degrees, 5, or exact)
     DONE - switch to celsius toggle
     DONE - make mobile friendly
     DONE - add Fahrenheit measurement
@@ -25,8 +25,8 @@ import { places } from "./modules/places.js"; // 10 current places, will expand 
 function weatherGuesser() {
   // Main button, form, and input
   const newCityButton = document.querySelector("#new-city-button"),
-        weatherForm = document.querySelector("#weather-guesser"),  
-        guessInput = document.querySelector("#guess");
+    weatherForm = document.querySelector("#weather-guesser"),
+    guessInput = document.querySelector("#guess");
 
   // Options
   const options = {
@@ -34,7 +34,7 @@ function weatherGuesser() {
     wrapper: document.querySelector("#options-wrapper"),
     temp: {
       form: document.querySelector("#options-temperature-form"),
-      setting: true, // true - f, false - c
+      setting: 1, // 1 - f, 0 - c
       display: "℉",
     },
     region: {
@@ -118,6 +118,18 @@ function weatherGuesser() {
   });
   options.difficulty.form.addEventListener("change", (event) => {
     options.difficulty.setting = Number.parseInt(event.target.value, 10);
+    const winCondition = document.querySelector("#win-condition");
+    switch (options.difficulty.setting) {
+      case 0:
+        winCondition.textContent = "within 10°";
+        break;
+      case 1:
+        winCondition.textContent = "within 5°";
+        break;
+      case 2:
+        winCondition.textContent = "an exact match";
+        break;
+    }
   });
 
   // Temp input, api call, and data return
@@ -163,11 +175,24 @@ function weatherGuesser() {
         answer.classList.remove("loader");
 
         const runLogic = (temp) => {
-          userGuess > temp
-            ? (answer.textContent = `Too high! ${script}`)
-            : userGuess < temp
-            ? (answer.textContent = `Too low! ${script}`)
-            : (answer.textContent = `YOU WIN! ${script}`);
+          const tempRange = () => {
+            switch (options.difficulty.setting) {
+              case 0:
+                return 10;
+              case 1:
+                return 5;
+              case 2:
+                return 0;
+            }
+          };
+          let difficulty = tempRange();
+          if (userGuess > temp + difficulty) {
+            answer.textContent = `Too high! ${script}`;
+          } else if (userGuess < temp - difficulty) {
+            answer.textContent = `Too low! ${script}`;
+          } else {
+            answer.textContent = `YOU WIN! ${script}`;
+          }
         };
 
         if (options.temp.setting) {
