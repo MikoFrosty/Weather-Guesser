@@ -23,15 +23,15 @@ import { places } from "./modules/places.js"; // 10 current places, will expand 
 //let counter = 26; // For testing
 
 function weatherGuesser() {
-  // Main inputs, forms, buttons, and wrappers
-  const weatherForm = document.querySelector("#weather-guesser");
-  const newCityButton = document.querySelector("#new-city-button");
-  const optionButton = document.querySelector("#option-button");
-  const optionsWrapper = document.querySelector("#options-wrapper");
-  const submitGuess = document.querySelector("#submit");
-  const guess = document.querySelector("#guess");
+  // Main button, form, and input
+  const newCityButton = document.querySelector("#new-city-button"),
+        weatherForm = document.querySelector("#weather-guesser"),  
+        guessInput = document.querySelector("#guess");
+
   // Options
-  const optionsForm = {
+  const options = {
+    button: document.querySelector("#option-button"),
+    wrapper: document.querySelector("#options-wrapper"),
     temp: {
       form: document.querySelector("#options-temperature-form"),
       setting: true, // true - f, false - c
@@ -41,12 +41,15 @@ function weatherGuesser() {
       form: document.querySelector("#options-region-form"),
       setting: 0, // 0 - Global, 1 - North America, 2 - Europe, 3 - Asia
     },
-    difficulty: document.querySelector("#options-difficulty-form"),
+    difficulty: {
+      form: document.querySelector("#options-difficulty-form"),
+      setting: 0, // 0 - Easy, 1 - Medium, 2 - Hard
+    },
   };
 
   // Retrieve a random location from places.js
   const getPlaces = () => {
-    switch (optionsForm.region.setting) {
+    switch (options.region.setting) {
       case 0:
         return places;
       case 1:
@@ -60,8 +63,8 @@ function weatherGuesser() {
 
   // For hiding the options screen when trying to interact with other buttons (besides options)
   const closeOptions = () => {
-    if (!optionsWrapper.classList.contains("hide")) {
-      optionsWrapper.classList.add("hide");
+    if (!options.wrapper.classList.contains("hide")) {
+      options.wrapper.classList.add("hide");
     }
   };
 
@@ -70,10 +73,12 @@ function weatherGuesser() {
     const mapWrapper = document.querySelector("#map-wrapper");
     const currentCity = document.querySelector("#current-city");
     const placesList = getPlaces();
-    newCityButton.dataset.number = Math.floor(Math.random() * placesList.length);
+    newCityButton.dataset.number = Math.floor(
+      Math.random() * placesList.length
+    );
     //newCityButton.dataset.number = counter++; // For testing specific cities
     let [city, country] = placesList[newCityButton.dataset.number];
-    guess.value = "";
+    guessInput.value = "";
 
     currentCity.textContent = `${city
       .replace(/_/g, " ")
@@ -99,29 +104,28 @@ function weatherGuesser() {
   });
 
   // Option button and event listeners for various settings
-  optionButton.addEventListener("click", () => {
-    optionsWrapper.classList.toggle("hide");
+  options.button.addEventListener("click", () => {
+    options.wrapper.classList.toggle("hide");
   });
 
-  optionsForm.temp.form.addEventListener("change", (event) => {
-    optionsForm.temp.setting = !optionsForm.temp.setting;
-    optionsForm.temp.display = optionsForm.temp.setting ? "℉" : "℃";
-    document.querySelector("#temp-setting").textContent =
-      optionsForm.temp.display;
+  options.temp.form.addEventListener("change", (event) => {
+    options.temp.setting = Number.parseInt(event.target.value, 10);
+    options.temp.display = options.temp.setting ? "℉" : "℃";
+    document.querySelector("#temp-setting").textContent = options.temp.display;
   });
-  optionsForm.region.form.addEventListener("change", (event) => {
-    optionsForm.region.setting = Number.parseInt(event.target.value, 10);
+  options.region.form.addEventListener("change", (event) => {
+    options.region.setting = Number.parseInt(event.target.value, 10);
   });
-  optionsForm.difficulty.addEventListener("change", (event) => {
-    optionsForm.difficulty.dataset.difficulty =
-      event.target.value.toLowerCase();
+  options.difficulty.form.addEventListener("change", (event) => {
+    options.difficulty.setting = Number.parseInt(event.target.value, 10);
   });
 
   // Temp input, api call, and data return
   weatherForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    submitGuess.setAttribute("disabled", "disabled");
+    const guessButton = document.querySelector("#submit");
+    guessButton.setAttribute("disabled", "disabled");
     closeOptions();
     let answer = document.querySelector("#answer");
     answer.textContent = "";
@@ -129,7 +133,7 @@ function weatherGuesser() {
     let [city, country] = getPlaces()[newCityButton.dataset.number];
 
     // User guesses weather in whole integer, value is stored as "userGuess"
-    let userGuess = guess.value;
+    let userGuess = guessInput.value;
 
     let h1 = document.querySelector("h1");
     h1.removeAttribute("id");
@@ -154,8 +158,8 @@ function weatherGuesser() {
         let script = `The current temp in ${city
           .replace(/_/g, " ")
           .replace(/[,]%20\w+/, "")}, ${country} is ${
-          optionsForm.temp.setting ? tempF : tempC
-        }${optionsForm.temp.display}.`;
+          options.temp.setting ? tempF : tempC
+        }${options.temp.display}.`;
         answer.classList.remove("loader");
 
         const runLogic = (temp) => {
@@ -166,7 +170,7 @@ function weatherGuesser() {
             : (answer.textContent = `YOU WIN! ${script}`);
         };
 
-        if (optionsForm.temp.setting) {
+        if (options.temp.setting) {
           runLogic(tempF);
         } else {
           runLogic(tempC);
@@ -178,7 +182,7 @@ function weatherGuesser() {
         answer.textContent = "The weather is unavailable right now :/";
       })
       .finally(() => {
-        submitGuess.removeAttribute("disabled");
+        guessButton.removeAttribute("disabled");
       });
   });
   loadCity();
