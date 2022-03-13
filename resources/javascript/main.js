@@ -162,7 +162,6 @@ function weatherGuesser() {
 
         // Handles winning, losing, and displaying proper messages
         const runLogic = (temp) => {
-          
           // Expand win conditions based on difficulty
           const tempRange = () => {
             switch (options.difficulty.setting) {
@@ -175,7 +174,7 @@ function weatherGuesser() {
             }
           };
           let difficulty = tempRange();
-          
+
           // Winning and losing messages
           if (userGuess > temp + difficulty) {
             answer.innerHTML = `<span class="loseh-text">Too high!</span> ${script}`;
@@ -184,7 +183,7 @@ function weatherGuesser() {
           } else {
             answer.innerHTML = `<span class="win-text">YOU WIN!</span> ${script}`;
           }
-          
+
           // Display current weather
           const currentWeather = document.querySelector("#current-weather");
           currentWeather.innerHTML = `
