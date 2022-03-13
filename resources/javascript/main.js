@@ -160,7 +160,10 @@ function weatherGuesser() {
         }${options.temp.display}.`;
         answer.classList.remove("loader");
 
+        // Handles winning, losing, and displaying proper messages
         const runLogic = (temp) => {
+          
+          // Expand win conditions based on difficulty
           const tempRange = () => {
             switch (options.difficulty.setting) {
               case 0:
@@ -172,6 +175,8 @@ function weatherGuesser() {
             }
           };
           let difficulty = tempRange();
+          
+          // Winning and losing messages
           if (userGuess > temp + difficulty) {
             answer.innerHTML = `<span class="loseh-text">Too high!</span> ${script}`;
           } else if (userGuess < temp - difficulty) {
@@ -179,6 +184,8 @@ function weatherGuesser() {
           } else {
             answer.innerHTML = `<span class="win-text">YOU WIN!</span> ${script}`;
           }
+          
+          // Display current weather
           const currentWeather = document.querySelector("#current-weather");
           currentWeather.innerHTML = `
               <p>Current weather: ${data.currentConditions.comment}</p>
@@ -187,6 +194,7 @@ function weatherGuesser() {
           currentWeather.style.borderTop = "1px solid black";
         };
 
+        // Run logic using Fahrenheit or Celsius
         if (options.temp.setting) {
           runLogic(tempF);
         } else {
