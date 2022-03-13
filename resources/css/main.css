@@ -4,7 +4,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1.1em;
 }
 
@@ -27,9 +27,10 @@ main {
 
 main > h1 {
     margin: 0;
-    padding: 70px;
-    font-size: 4em;
-    text-shadow: 1px 0px 2px rgba(2, 236, 186, 0.9), -1px -0px 2px rgb(213, 1, 255), 0px 0px 30px white, 0px 0px 30px white;    
+    padding: 50px;
+    font-size: 6vw;
+    line-height: 1;
+    text-shadow: -2px -0px 4px rgb(107, 176, 255), 0px 0px 30px white, 0px 0px 30px white, 0px 0px 30px white;    
 }
 
 /* Main content wrapper */
@@ -42,7 +43,7 @@ main > h1 {
     margin: 5px;
     width: 50%;
     height: auto;
-    background-image: linear-gradient(200deg, rgba(255, 255, 255, 0.95), rgba(230, 230, 230, 0.8))
+    background-image: linear-gradient(rgb(236, 246, 255), rgba(255, 255, 255, 0.801));
 }
 
 /* New city form and text */
@@ -110,7 +111,19 @@ main > h1 {
 } 
 
 #answer {
-    padding: 20px;
+    padding: 16px;
+}
+
+#current-weather {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    margin: auto;
+}
+
+#current-weather img {
+    margin-left: 5px;
 }
 
 #map-and-options-wrapper {
@@ -171,6 +184,15 @@ iframe {
     border: 2px solid black;
 }
 
+.loseh-text {
+    color: rgb(201, 0, 0);
+}
+.losel-text {
+    color: rgb(0, 0, 255);
+}
+.win-text {
+    color: rgb(0, 161, 0);
+}
 /* Footer & loader (spinner) */
 
 footer {
@@ -217,8 +239,9 @@ footer {
     * {
         font-size: 1em;
     }
-    p #answer {
-        padding: 0;
+    main > h1 {
+        font-size: 8vw;
+        padding: 40px;
     }
     #main-content {
         padding-bottom: 20px;
@@ -248,12 +271,15 @@ footer {
         width: 100px;
     }
     main > h1 {
-        font-size: 3rem;
-        padding: 30px;
+        font-size: 10vw;
+        padding: 20px;
     }
     section#main-content {
         width: 80%;
         padding: 20px;
+    }
+    #current-weather {
+        font-size: .8em;
     }
     .loader {
         width: 5px;
@@ -267,5 +293,8 @@ footer {
 @media only screen and (max-width: 300px) {
     * {
         font-size: .95em;
+    }
+    main > h1 {
+        padding: 10px;
     }
 }
