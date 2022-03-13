@@ -1,23 +1,6 @@
 ////////// Weather Guesser //////////
 //// Created by Brandon Mikowski ////
 
-/*  Roadmap:
-    DONE - Disable button while loading
-    DONE - Show city name first before asking for guess
-    DONE - Change css/html presentation
-    STANDBY - (may be done, unless weather events are added) Add graphics
-    DONE - (added 30 (40 total)) Add more cities -- possibly look into adding cities using an api or some other method
-    DONE - Add error handling to api request
-    CANCELLED - keep score
-    STANDBY - expand api data for more challenges
-    DONE - selection area e.g. North america, asia, africa, global, etc...
-    DONE - Decided on showing map - Show live picture of city with current conditions (maybe before guess even)
-    DONE - difficulty levels (guess within 10 degrees, 5, or exact)
-    DONE - switch to celsius toggle
-    DONE - make mobile friendly
-    DONE - add Fahrenheit measurement
-*/
-
 import FetchWrapper from "./modules/fetchwrapper.js";
 import { places } from "./modules/places.js"; // 10 current places, will expand to 100
 //let counter = 26; // For testing
@@ -99,7 +82,10 @@ function weatherGuesser() {
   };
 
   newCityButton.addEventListener("click", () => {
+    const currentWeather = document.querySelector("#current-weather");
     document.querySelector("#answer").textContent = "";
+    currentWeather.innerHTML = "";
+    currentWeather.style.borderTop = "none";
     loadCity();
   });
 
@@ -187,12 +173,18 @@ function weatherGuesser() {
           };
           let difficulty = tempRange();
           if (userGuess > temp + difficulty) {
-            answer.textContent = `Too high! ${script}`;
+            answer.innerHTML = `<span class="loseh-text">Too high!</span> ${script}`;
           } else if (userGuess < temp - difficulty) {
-            answer.textContent = `Too low! ${script}`;
+            answer.innerHTML = `<span class="losel-text">Too low!</span> ${script}`;
           } else {
-            answer.textContent = `YOU WIN! ${script}`;
+            answer.innerHTML = `<span class="win-text">YOU WIN!</span> ${script}`;
           }
+          const currentWeather = document.querySelector("#current-weather");
+          currentWeather.innerHTML = `
+              <p>Current weather: ${data.currentConditions.comment}</p>
+              <img src="${data.currentConditions.iconURL}">
+          `;
+          currentWeather.style.borderTop = "1px solid black";
         };
 
         if (options.temp.setting) {
