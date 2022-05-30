@@ -141,18 +141,20 @@ function weatherGuesser() {
     let attribute = h1.getAttribute("id");
     console.log(attribute);
 
-    // Weater API is https://weatherdbi.herokuapp.com/documentation/v1
-    // Base URL is: https://weatherdbi.herokuapp.com/data/weather/
+    // OLD Weather API was https://weatherdbi.herokuapp.com/documentation/v1 and has stopped working    
+    // New API is https://www.weatherapi.com/docs/
+    // Base URL is: http://api.weatherapi.com/v1
     // Use city name for endpoint
 
     const API = new FetchWrapper(
-      "https://weatherdbi.herokuapp.com/data/weather/"
+      "http://api.weatherapi.com/v1/current.json?key=72b4230dbcfc4df5b07205043212612&q="
     );
 
     API.get(city)
       .then((data) => {
-        let tempF = Math.floor(data.currentConditions.temp.f);
-        let tempC = Math.floor(data.currentConditions.temp.c);
+        console.log(data);
+        let tempF = Math.floor(data.current.temp_f);
+        let tempC = Math.floor(data.current.temp_c);
         let script = `The current temp in ${city
           .replace(/_/g, " ")
           .replace(/[,]%20\w+/, "")}, ${country} is ${
@@ -187,8 +189,8 @@ function weatherGuesser() {
           // Display current weather
           const currentWeather = document.querySelector("#current-weather");
           currentWeather.innerHTML = `
-              <p>Current weather: ${data.currentConditions.comment}</p>
-              <img src="${data.currentConditions.iconURL}">
+              <p>Current weather: ${data.current.condition.text}</p>
+              <img src="${data.current.condition.icon}">
           `;
           currentWeather.style.borderTop = "1px solid black";
         };
