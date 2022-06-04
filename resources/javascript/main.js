@@ -135,11 +135,8 @@ function weatherGuesser() {
 
     let h1 = document.querySelector("h1");
     h1.removeAttribute("id");
-    console.log(h1.hasAttribute("id"));
     h1.setAttribute("id", "newid");
-    console.log(h1.hasAttribute("id"));
     let attribute = h1.getAttribute("id");
-    console.log(attribute);
 
     // OLD Weather API was https://weatherdbi.herokuapp.com/documentation/v1 and has stopped working    
     // New API is https://www.weatherapi.com/docs/
@@ -147,7 +144,7 @@ function weatherGuesser() {
     // Use city name for endpoint
 
     const API = new FetchWrapper(
-      "http://api.weatherapi.com/v1/current.json?key=72b4230dbcfc4df5b07205043212612&q="
+      "https://api.weatherapi.com/v1/current.json?key=72b4230dbcfc4df5b07205043212612&q="
     );
 
     API.get(city)
